@@ -23,10 +23,17 @@ function* getStock() {
 function* saveStock(data) {
   try {
     const res = yield call(API.post, "/users", data.payload);
-    console.log(res);
     yield put(action.saveStockSuccess(res));
   } catch (error) {
     yield put(action.saveStockError(error));
+  }
+}
+function* editStock(data) {
+  try {
+    const res = yield call(API.put, `/users/${data.payload.id}`, data.payload);
+    yield put(action.editStockSuccess(res));
+  } catch (error) {
+    yield put(action.editStockError(error));
   }
 }
 
@@ -34,6 +41,7 @@ export default function* watchExample() {
   yield all([
     takeLatest(ActionType.EXAMPLE_REQUEST, example),
     takeLatest(ActionType.GET_STOCK_REQUEST, getStock),
-    takeLatest(ActionType.SAVE_STOCK_REQUEST, saveStock)
+    takeLatest(ActionType.SAVE_STOCK_REQUEST, saveStock),
+    takeLatest(ActionType.EDIT_STOCK_REQUEST, editStock)
   ]);
 }

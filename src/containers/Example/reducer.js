@@ -45,7 +45,6 @@ export const getStockRequest = (state, payload) => {
   };
 };
 export const getStockSuccess = (state, payload) => {
-  console.log(payload);
   return {
     ...state,
     isLoading: {
@@ -98,6 +97,37 @@ export const saveStockError = (state, payload) => {
   };
 };
 
+export const editStockRequest = (state, payload) => {
+  return {
+    ...state,
+    isLoading: {
+      ...state.isLoading,
+      stock: true
+    }
+  };
+};
+export const editStockSuccess = (state, payload) => {
+  return {
+    ...state,
+    isLoading: {
+      ...state.isLoading,
+      stock: false
+    },
+    stock: state.stock
+  };
+};
+export const editStockError = (state, payload) => {
+  return {
+    ...state,
+    isLoading: {
+      ...state.isLoading,
+      stock: false
+    },
+    error: true,
+    errorMessage: payload.error
+  };
+};
+
 const exampleReducer = (state = initExample, action) => {
   switch (action.type) {
     case ActionType.EXAMPLE_REQUEST:
@@ -120,6 +150,13 @@ const exampleReducer = (state = initExample, action) => {
       return saveStockSuccess(state, action.payload);
     case ActionType.SAVE_STOCK_ERROR:
       return saveStockError(state, action.payload);
+
+    case ActionType.EDIT_STOCK_REQUEST:
+      return editStockRequest(state, action.payload);
+    case ActionType.EDIT_STOCK_SUCCESS:
+      return editStockSuccess(state, action.payload);
+    case ActionType.EDIT_STOCK_ERROR:
+      return editStockError(state, action.payload);
 
     default:
       return state;

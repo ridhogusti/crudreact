@@ -2,15 +2,43 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Table, Divider, Form, Select, Input, Button } from "antd";
 
-import { exampleRequest, getStockRequest, saveStockRequest } from "./action";
+import {
+  exampleRequest,
+  getStockRequest,
+  saveStockRequest,
+  editStockRequest
+} from "./action";
 const { Option } = Select;
 
-const Example = ({ getStock, stock, form, saveStock }) => {
+const Example = ({
+  getStock,
+  stock,
+  form,
+  saveStock,
+  isLoading,
+  editStock
+}) => {
+  const [editing, setEditing] = useState(false);
+  const [formStock, setFormStock] = useState({
+    name: "",
+    kategori: "",
+    ukuran: "",
+    warna: ""
+  });
   const { getFieldDecorator } = form;
+
   useEffect(() => {
     getStock();
     return () => {};
   }, [getStock]);
+
+  useEffect(() => {
+    if (isLoading) {
+      form.resetFields();
+      setEditing(false);
+    }
+    return () => {};
+  }, [form, isLoading]);
 
   const columns = [
     {
@@ -39,7 +67,7 @@ const Example = ({ getStock, stock, form, saveStock }) => {
       key: "action",
       render: (text, record) => (
         <span>
-          <a href="javascript:;">Invite {record.name}</a>
+          <a onClick={() => update(record)}>Edit</a>
           <Divider type="vertical" />
           <a href="javascript:;">Delete</a>
         </span>
@@ -49,10 +77,33 @@ const Example = ({ getStock, stock, form, saveStock }) => {
 
   const save = e => {
     form.validateFields((err, values) => {
-      console.log(values);
       if (!err) {
         saveStock(values);
       }
+    });
+  };
+  const edit = e => {
+    form.validateFields((err, values) => {
+      if (!err) {
+        editStock(values);
+      }
+    });
+  };
+  const update = e => {
+    setEditing(true);
+    form.setFieldsValue({
+      id: e.id,
+      name: e.name,
+      kategori: e.kategori,
+      ukuran: e.ukuran,
+      warna: e.warna
+    });
+  };
+
+  const onTyping = e => {
+    setFormStock({
+      ...formStock,
+      [e.target.id]: e.target.value
     });
   };
 
@@ -106,24 +157,30 @@ const Example = ({ getStock, stock, form, saveStock }) => {
           )}
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={save}>
+          <Button type="primary" onClick={editing ? edit : save}>
             Save
           </Button>
         </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={stock} />
+      <Table
+        rowKey={record => record.id}
+        columns={columns}
+        dataSource={stock}
+      />
     </div>
   );
 };
 const mapStateToProps = state => ({
   example: state.exampleReducer,
-  stock: state.example.stock
+  stock: state.example.stock,
+  isLoading: state.example.isLoading.stock
 });
 
 const mapDispatchToProps = dispatch => ({
   example: () => dispatch(exampleRequest()),
   getStock: () => dispatch(getStockRequest()),
-  saveStock: data => dispatch(saveStockRequest(data))
+  saveStock: data => dispatch(saveStockRequest(data)),
+  editStock: data => dispatch(editStockRequest(data))
 });
 
 const WrappedExample = Form.create({ name: "validate_other" })(Example);

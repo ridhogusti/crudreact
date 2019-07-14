@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Form, Icon, Input, Button, Checkbox, Row, Col } from "antd";
 import { authRequest } from "./action";
+import { USER_AUTH } from "../../utils/constants";
 
 const Auth = ({ form, auth, history }) => {
   const { getFieldDecorator } = form;
+  useEffect(() => {
+    const isAuthFromStorage = JSON.parse(localStorage.getItem(USER_AUTH));
+    if (isAuthFromStorage) {
+      history.push("/example");
+    }
+  }, [history]);
 
   const handleSubmit = e => {
     e.preventDefault();

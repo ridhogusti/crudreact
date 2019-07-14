@@ -6,7 +6,7 @@ import "antd/dist/antd.css";
 import Auth from "../Auth";
 import Example from "../Example";
 import "../../App.css";
-import Authorization from "../../utils/privateRoute";
+import PrivateRoute from "../../utils/privateRoute";
 
 class App extends React.Component {
   render() {
@@ -14,10 +14,12 @@ class App extends React.Component {
       <BrowserRouter>
         <React.Fragment>
           <Switch>
-            <Route path="/auth" component={Auth} />
-            <Route
+            <Route exact path="/auth" component={Auth} />
+            <PrivateRoute
+              exact
               path="/example"
-              component={Authorization(Example, ["manager", "admin"])}
+              component={Example}
+              allowedRoles={["admin"]}
             />
           </Switch>
         </React.Fragment>

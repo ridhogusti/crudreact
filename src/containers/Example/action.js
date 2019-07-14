@@ -58,3 +58,22 @@ export const saveStockError = error => {
     payload: error
   };
 };
+
+export const editStockRequest = data => {
+  return {
+    type: ActionType.EDIT_STOCK_REQUEST,
+    payload: data
+  };
+};
+export const editStockSuccess = data => {
+  return {
+    type: ActionType.EDIT_STOCK_SUCCESS,
+    payload: data
+  };
+};
+export const editStockError = error => {
+  return {
+    type: ActionType.EDIT_STOCK_ERROR,
+    payload: error
+  };
+};
