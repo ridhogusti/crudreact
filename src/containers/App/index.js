@@ -22,12 +22,7 @@ class App extends React.Component {
               component={Example}
               allowedRoles={["admin"]}
             />
-            <PrivateRoute
-              exact
-              path="/list-stok"
-              component={Customer}
-              allowedRoles={["customer", "admin"]}
-            />
+            <Route exact path="/list-stok" component={Customer} />
           </Switch>
         </React.Fragment>
       </BrowserRouter>
