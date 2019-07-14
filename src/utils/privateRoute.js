@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { USER_AUTH } from "../utils/constants";
+import NotFound from "../containers/NotFound";
 function PrivateRoute({ component: Component, allowedRoles, ...rest }) {
   return (
     <Route
@@ -12,7 +13,7 @@ function PrivateRoute({ component: Component, allowedRoles, ...rest }) {
           return (
             <Redirect
               to={{
-                pathname: "/auth",
+                pathname: "/login",
                 state: { from: props.location }
               }}
             />
@@ -22,7 +23,7 @@ function PrivateRoute({ component: Component, allowedRoles, ...rest }) {
         } else if (allowedRoles.includes(isAuthFromStorage.role)) {
           return <Component {...props} />;
         } else {
-          return <h1>No page for you!</h1>;
+          return NotFound;
         }
       }}
     />

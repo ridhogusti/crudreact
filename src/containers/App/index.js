@@ -15,18 +15,18 @@ class App extends React.Component {
       <BrowserRouter>
         <React.Fragment>
           <Switch>
-            <Route exact path="/auth" component={Auth} />
+            <Route exact path="/login" component={Auth} />
             <PrivateRoute
               exact
-              path="/example"
+              path="/data-entry"
               component={Example}
               allowedRoles={["admin"]}
             />
             <PrivateRoute
               exact
-              path="/customer"
+              path="/list-stok"
               component={Customer}
-              allowedRoles={["customer"]}
+              allowedRoles={["customer", "admin"]}
             />
           </Switch>
         </React.Fragment>

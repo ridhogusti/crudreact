@@ -31,8 +31,8 @@ function* saveStock(data) {
 }
 function* editStock(data) {
   try {
-    const res = yield call(API.put, `/users/${data.payload.id}`, data.payload);
-    yield put(action.editStockSuccess(res));
+    // const res = yield call(API.put, `/users/${data.payload.id}`, data.payload);
+    yield put(action.editStockSuccess(data.payload));
   } catch (error) {
     yield put(action.editStockError(error));
   }

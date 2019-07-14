@@ -10,9 +10,9 @@ const Auth = ({ form, auth, history }) => {
     const isAuthFromStorage = JSON.parse(localStorage.getItem(USER_AUTH));
     if (isAuthFromStorage !== null) {
       if (isAuthFromStorage.role == "admin") {
-        history.push("/example");
+        history.push("/data-entry");
       } else if (isAuthFromStorage.role == "customer") {
-        history.push("/customer");
+        history.push("/list-stok");
       }
     }
   }, [history]);

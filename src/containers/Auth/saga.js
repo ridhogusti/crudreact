@@ -15,7 +15,7 @@ function* auth(data) {
     );
     localStorage.setItem(USER_AUTH, JSON.stringify(user));
     if (user !== undefined) {
-      data.payload.history.push("/Example");
+      data.payload.history.push("/data-entry");
     }
     // const res = yield call(API.get, "/posts");
     yield put(action.authSuccess(user));
