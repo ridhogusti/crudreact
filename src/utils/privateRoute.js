@@ -19,6 +19,8 @@ function PrivateRoute({ component: Component, allowedRoles, ...rest }) {
           );
         } else if (allowedRoles.includes(isAuthFromStorage.role)) {
           return <Component {...props} />;
+        } else if (allowedRoles.includes(isAuthFromStorage.role)) {
+          return <Component {...props} />;
         } else {
           return <h1>No page for you!</h1>;
         }

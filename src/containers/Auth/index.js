@@ -8,8 +8,12 @@ const Auth = ({ form, auth, history }) => {
   const { getFieldDecorator } = form;
   useEffect(() => {
     const isAuthFromStorage = JSON.parse(localStorage.getItem(USER_AUTH));
-    if (isAuthFromStorage) {
-      history.push("/example");
+    if (isAuthFromStorage !== null) {
+      if (isAuthFromStorage.role == "admin") {
+        history.push("/example");
+      } else if (isAuthFromStorage.role == "customer") {
+        history.push("/customer");
+      }
     }
   }, [history]);
 

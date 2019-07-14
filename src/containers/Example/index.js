@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Table, Divider, Form, Select, Input, Button } from "antd";
+import { Table, Divider, Form, Select, Input, Button, Row, Col } from "antd";
 
 import {
   exampleRequest,
@@ -108,66 +108,77 @@ const Example = ({
   };
 
   return (
-    <div>
-      <Form>
-        <Form.Item label="Name">
-          {getFieldDecorator("name", {
-            rules: [
-              {
-                required: true,
-                message: "Please input your name"
-              }
-            ]
-          })(<Input placeholder="Please input your name" />)}
-        </Form.Item>
-        <Form.Item label="Kategori" hasFeedback>
-          {getFieldDecorator("kategori", {
-            rules: [{ required: true, message: "Please select your kategori!" }]
-          })(
-            <Select placeholder="Please select a kategori">
-              <Option value="celana">Celana</Option>
-              <Option value="kaos">Kaos</Option>
-              <Option value="jaket">Jaket</Option>
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="Ukuran" hasFeedback>
-          {getFieldDecorator("ukuran", {
-            rules: [{ required: true, message: "Please select your ukuran!" }]
-          })(
-            <Select placeholder="Please select a ukuran">
-              <Option value="s">s</Option>
-              <Option value="m">m</Option>
-              <Option value="xl">xl</Option>
-              <Option value="27">27</Option>
-              <Option value="28">28</Option>
-              <Option value="30">30</Option>
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="Warna" hasFeedback>
-          {getFieldDecorator("warna", {
-            rules: [{ required: true, message: "Please select your warna!" }]
-          })(
-            <Select placeholder="Please select a warna">
-              <Option value="mocha">mocha</Option>
-              <Option value="cream">cream</Option>
-              <Option value="hitam">hitam</Option>
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" onClick={editing ? edit : save}>
-            Save
-          </Button>
-        </Form.Item>
-      </Form>
-      <Table
-        rowKey={record => record.id}
-        columns={columns}
-        dataSource={stock}
-      />
-    </div>
+    <Row
+      className="custom-row"
+      type="flex"
+      justify="space-around"
+      align="middle"
+    >
+      <Col xl={6}>
+        <Form>
+          <Form.Item label="Name">
+            {getFieldDecorator("name", {
+              rules: [
+                {
+                  required: true,
+                  message: "Please input your name"
+                }
+              ]
+            })(<Input placeholder="Please input your name" />)}
+          </Form.Item>
+          <Form.Item label="Kategori" hasFeedback>
+            {getFieldDecorator("kategori", {
+              rules: [
+                { required: true, message: "Please select your kategori!" }
+              ]
+            })(
+              <Select placeholder="Please select a kategori">
+                <Option value="celana">Celana</Option>
+                <Option value="kaos">Kaos</Option>
+                <Option value="jaket">Jaket</Option>
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="Ukuran" hasFeedback>
+            {getFieldDecorator("ukuran", {
+              rules: [{ required: true, message: "Please select your ukuran!" }]
+            })(
+              <Select placeholder="Please select a ukuran">
+                <Option value="s">s</Option>
+                <Option value="m">m</Option>
+                <Option value="xl">xl</Option>
+                <Option value="27">27</Option>
+                <Option value="28">28</Option>
+                <Option value="30">30</Option>
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="Warna" hasFeedback>
+            {getFieldDecorator("warna", {
+              rules: [{ required: true, message: "Please select your warna!" }]
+            })(
+              <Select placeholder="Please select a warna">
+                <Option value="mocha">mocha</Option>
+                <Option value="cream">cream</Option>
+                <Option value="hitam">hitam</Option>
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" onClick={editing ? edit : save}>
+              Save
+            </Button>
+          </Form.Item>
+        </Form>
+      </Col>
+      <Col xs={2} sm={4} md={6} lg={8} xl={14}>
+        <Table
+          rowKey={record => record.id}
+          columns={columns}
+          dataSource={stock}
+        />
+      </Col>
+    </Row>
   );
 };
 const mapStateToProps = state => ({
